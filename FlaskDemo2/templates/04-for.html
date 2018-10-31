@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--{% for name in params.list %}-->
+        <!--{% if loop.first %}-->
+        <!--<div style="background-color:red">{{name}}</div>-->
+        <!--{% elif loop.last %}-->
+        <!--<div style="background:pink; font-family:'楷体'">{{name}}</div>-->
+        <!--{% else %}-->
+        <!--<div style="background-color:yellow">{{name}}</div>"-->
+        <!--{% endif %}-->
+    <!--{% endfor %}-->
+
+    {% for name in params.list %}
+        <div style="background-color:
+        {% if loop.first %}
+            red
+        {% elif loop.last %}
+            yellow
+        {% else %}
+            pink
+        {% endif %}
+        ">{{name}}</div>
+    {% endfor %}
+
+
+
+    {% for value in params.dict.values() %}
+        <h1>{{value}}</h1>
+    {% endfor %}
+
+    {% for key, value in params.dict.items() %}
+        <h2>{{key}}：{{value}}</h2>
+    {% endfor %}
+
+    <!--引入macro.html 并使用宏-->
+    {% import macro.html as macros %}
+
+    {% for name in params.list}
+        {{% macros.show_li(name) %}}
+    {% endfor %}
+
+
+</body>
+</html>

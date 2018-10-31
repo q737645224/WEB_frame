@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% macro show_p(str)%}
+        <p style="background:#f60;">{{str}}</p>
+    {% endmacro %}
+
+    {% macro show_li(str) %}
+    <li>
+        <p style="font-size:20px;">内容</p>
+        <span style="color: orange;">{{str}}</span>
+    </li>
+    {% endmacro %}
+</body>
+</html>
