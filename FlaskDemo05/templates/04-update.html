@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/04-update" method="post">
+    <p>
+        姓名： <input type="text" name="username" value="{{ user.username }}">
+        <!-- 需要提交给服务器，但不能给用户显示 -->
+        <input type="hidden" name="id" value="{{ user.id }}">
+    </p>
+    <p>
+        年龄： <input type="number" name="age" value="{{ user.age }}">
+    </p>
+    <p>
+        邮箱： <input type="email" name="email" value="{{ user.email }}">
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+</form>
+</body>
+</html>

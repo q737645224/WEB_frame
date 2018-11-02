@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>邮箱</th>
+            <th>操作</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.age }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="/04-update?id={{ user.id }}">修改</a>
+                    <a href="javascript:deleteUser({{ user.id }})">删除</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <script>
+        /**
+         * 删除指定用的方法
+         * 参数 id : 表示的是要删除的用户的id
+         * */
+        function deleteUser(id){
+            //1.弹出提示是否要删除
+            if(window.confirm('确定要删除?')){
+                //2.如果真的要删除则发送请求到后台
+                location.href="/06-delete?id="+id;
+            }
+        }
+    </script>
+</body>
+</html>
