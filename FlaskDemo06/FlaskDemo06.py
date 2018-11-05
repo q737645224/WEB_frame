@@ -53,6 +53,56 @@ class Wife(db.Model):
     def __repr__(self):
         return "<Wife:%r>" % self.wname
 
+class Student(db.Model):
+    __tablename__ = "student"
+    id = db.Column(db.Integer,primary_key=True)
+    sname = db.Column(db.String(30))
+    sage = db.Column(db.Integer)
+    #增加关联属性以及反向引用
+    courses=db.relationship(
+        'Course',
+        secondary='student_course',
+        lazy = 'dynamic',
+        backref=db.backref('students',lazy='dynamic')
+    )
+
+    teachers = db.relationship(
+        'Teacher',
+        secondary='student_teacher',
+        lazy = 'dynamic',
+        backref=db.backref('students',lazy='dynamic')
+    )
+
+    def __repr__(self):
+        return "<Student:%r>" % self.sname
+
+#使用db.Table创建第三张关联表,不需要对应的实体类
+student_course = db.Table(
+    #指定关联表的表名
+    'student_course',
+    #指定关联表的主键
+    db.Column(
+        'id',db.Integer,primary_key=True),
+    #指定外键，关联student表的主键
+    db.Column(
+        'student_id',db.Integer,
+        db.ForeignKey('student.id')),
+    #指定外键，关联course表的主键
+    db.Column(
+        'course_id',db.Integer,
+        db.ForeignKey('course.id'))
+)
+
+student_teacher = db.Table(
+    'student_teacher',
+    db.Column('id',db.Integer,primary_key=True),
+    db.Column('student_id',
+              db.Integer,
+              db.ForeignKey('student.id')),
+    db.Column('teacher_id',
+              db.Integer,
+              db.ForeignKey('teacher.id'))
+)
 
 
 # 同步回数据库
@@ -158,6 +208,45 @@ def querywife():
     wife = Wife.query.filter_by(id=2).first()
     teacher = wife.teacher
     return "老师:%s,夫人:%s" % (teacher.tname,wife.wname)
+
+@app.route('/08-asc')
+def add_student_course():
+    # 获取id为1的学员的信息
+    student=Student.query.filter_by(id=1).first()
+    # 获取id为1的课程信息
+    course=Course.query.filter_by(id=2).first()
+    # 将student与course关联到一起
+    student.courses.append(course)
+    db.session.add(student)
+    return "Add Course OK"
+@app.route('/09-getM2M')
+def getM2M():
+    # student = Student.query.filter_by(id=1).first()
+    # courses = student.courses.all()
+    # print(courses)
+
+    course = Course.query.filter_by(id=1).first()
+    students = course.students.all()
+    print(students)
+    return "Query OK"
+
+@app.route('/010-register-student',methods=['GET','POST'])
+def register_student():
+    if request.method == 'GET':
+        students = Student.query.all()
+        teachers = Teacher.query.all()
+        return render_template('010-student.html',params = locals())
+    else:
+        sid = request.form.get('sid')
+        tids = request.form.getlist('tids')
+        student = Student.query.filter_by(id=sid).first()
+        teachers=Teacher.query.filter(Teacher.id.in_(tids)).all()
+        for tea in teachers:
+            student.teachers.append(tea)
+        db.session.add(student)
+        return "Register OK"
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
