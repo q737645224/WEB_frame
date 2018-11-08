@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../js/common.js"></script>
+  <script src="../js/jquery-1.11.3.js"></script>
+  <script>
+    /**
+     * 使用ajax加载所有的省份信息到selPro中
+     * */
+    function loadPro(){
+     $.ajax({
+         url:'/01-province,
+         type:'get',
+         async:false,
+         dateType:'json',
+         success:function(dada){
+             var html='';
+             $.each(arr,function(i,obj){
+               html+="<option value="+obj.id+">";
+               html+=obj.proName;
+               html+="</option>";
+             });
+             $("#selPro").html(html);
+         }
+         }
+     )
+    }
+    /**
+     * 使用ajax根据pid加载对应的所有的城市信息,并显示在selCity中
+     * */
+    function loadCity(pid){
+        $.ajax({
+               url:'/01-city',
+                type:'get',
+                data:'pid='+pid,
+                dataType:'json',
+                success:function(data){
+                    var html = "";
+                    $.each(arr,function(i,obj){
+                        html+="<option value='"+obj.id+"'>";
+                        html+=obj.cityName;
+                        html+="</option>";
+                      });
+                    $("#selCity").html(html);
+                }
+            });
+    }
+
+
+    $(function(){
+      /**加载所有省份*/
+      loadPro();
+
+      /**加载对应省份的所有城市*/
+      loadCity($("#selPro").val());
+
+
+      /**为selPro绑定change事件*/
+      $("#selPro").change(function(){
+        loadCity(this.value);
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <h2>使用AJAX完成的省市级联</h2>
+  <select id="selPro"></select>
+  <select id="selCity"></select>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../js/jquery-1.11.3.js"></script>
+  <script>
+    $(function(){
+      $("#btnSave").click(function(){
+        //1.将参数们先拼成一个js对象
+        var data = {
+          "loginname":$("#loginname").val(),
+          "loginpwd":$("#loginpwd").val(),
+          "username":$("#username").val()
+        }
+        //2.使用$.post()发送异步请求
+        $.post('/04-jq-post',data,function(data){
+          if(data.status == 1){
+            $("#loginname").val("");
+            $("#loginpwd").val("");
+            $("#username").val("");
+          }else{
+            alert(data.msg);
+          }
+        },'json');
+      });
+    });
+  </script>
+</head>
+<body>
+  <div>
+    <p>
+      登录名称: <input type="text" id="loginname">
+    </p>
+    <p>
+      登录密码: <input type="password" id="loginpwd">
+    </p>
+    <p>
+      用户名称: <input type="text" id="username">
+    </p>
+    <p>
+      <button id="btnSave">保存并增加另一个</button>
+    </p>
+  </div>
+</body>
+</html>

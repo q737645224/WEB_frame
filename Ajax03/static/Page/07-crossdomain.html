@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-1.11.3.js"></script>
+    <script>
+        $(function (){
+            $("#btnCross").click(function (){
+                /*由于以下操作触发了同源策略所以导致请求被拒绝*/
+        /*$.get('http://127.0.0.1:5000/07-crossdomain', function(data){
+          console.log(data);
+        });*/
+
+        //原生的js完成跨域请求-通过<script>完成跨域访问
+        //1.动态创建script标记
+        var script = document.createElement('script');
+        //2.为script标记的type属性赋值为text/javascript
+        script.type="text/javascript";
+        //3.为script标记的src属性赋值，指定跨域访问路径
+        script.src="http://127.0.0.1:5000/07-crossdomain";
+        //4.获取页面尚的body元素
+        var body = document.getElementsByTagName("body")[0];
+        //5.将script标记追加到当前的页面中(body中)：也就是向src的地址发送请求，同时接收响应数据，响应数据直接交给了页面，由页面当成js的脚本去执行
+        body.append(script);
+            });
+        });
+    </script>
+</head>
+<body>
+    <button id="btnCross">跨域请求</button>
+</body>
+</html>

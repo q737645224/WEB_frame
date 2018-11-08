@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../js/jquery-1.11.3.js"></script>
+  <script>
+    $(function(){
+      $.get('/03-jq-get',function(data){
+        // data 是js的对象，已经不再是普通的字符串
+        var html = "";
+        $.each(data,function(i,obj){
+          html+="<option>";
+          html+=obj.proName;
+          html+="</option>";
+        });
+        $("#selPro").html(html);
+      },'json');
+    })
+  </script>
+</head>
+<body>
+  <select id="selPro"></select>
+</body>
+</html>

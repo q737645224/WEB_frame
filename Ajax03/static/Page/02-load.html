@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../js/jquery-1.11.3.js"></script>
+  <script>
+    $(function(){
+      $("#btnLoad").click(function(){
+        //$obj.load(url,data,callback);
+        //var params = "name=MRWang&age=30";
+        var params = {
+          "name":"MrWang",
+          "age":30
+        }
+        $("#show").load('/02-server', params, function(resText,statusText){
+          console.log("响应数据成功");
+          console.log("resText:"+resText);
+          console.log("statusText:"+statusText);
+          $("#show").html("响应回来的数据:"+resText);
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+  <button id="btnLoad">$obj.load()</button>
+  <div id="show"></div>
+</body>
+</html>

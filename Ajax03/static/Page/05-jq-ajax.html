@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="../js/jquery-1.11.3.js"></script>
+  <script>
+    $(function(){
+
+      $.ajax({
+        url:"/03-jq-get",
+        type:'get',
+        dataType:'json',
+        success:function(data){
+          var html = "";
+          $.each(data,function(i,obj){
+            html+="<option>"+obj.proName+"</option>";
+          });
+          $("#selPro").html(html);
+        }
+      });
+
+    });
+  </script>
+</head>
+<body>
+<select id="selPro"></select>
+</body>
+</html>
