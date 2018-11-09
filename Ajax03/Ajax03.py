@@ -130,6 +130,17 @@ def jq_post():
 def crosssdomain():
     return "console.log(这是访问路径)"
 
+@app.route('/08-flight')
+def fight_views():
+    dic = {
+        "flightNO":"MU763",
+        "start":"BeiJing",
+        "end":"Saipan",
+        "time":"16:55"
+    }
+    show = request.args.get('callback')
+    return show+"("+json.dumps(dic)+")"
+
 
 if __name__ == '__main__':
     app.run(debug=True)
