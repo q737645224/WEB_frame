@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  {# 也是模板中的注释 #}
+  <h1>标签</h1>
+  {% comment list %}
+  <h3>list[0]:{{ list[0] }}</h3>
+  {% endcomment %}
+  <h3>循环</h3>
+  <!--
+    第一块h2：背景为红色
+    最后一块h2:背景为黄色
+    中间所有的h2：背景为　粉色
+   -->
+  {% for str in list %}
+    {% comment  %}
+    <h2
+      {% if forloop.first %}
+        style="background:red;"
+      {% elif forloop.last %}
+        style="background:yellow"
+      {% else %}
+        style="background:deeppink"
+      {% endif %}
+    >
+    {% endcomment %}
+    <h2 style="background:
+      {% if forloop.first %}
+        red
+      {% elif forloop.last %}
+        yellow
+      {% else %}
+        deeppink
+      {% endif %}
+    ;">
+      <p>姓名:{{ str }}</p>
+      <p>counter:{{ forloop.counter }}</p>
+      <p>counter0:{{ forloop.counter0 }}</p>
+      <p>revcounter:{{ forloop.revcounter }}</p>
+      <p>revcounter0:{{ forloop.revcounter0 }}</p>
+    </h2>
+  {% endfor %}
+
+  <h1>变量</h1>
+  <h3>姓名:{{ name }}</h3>
+  <h3>性别:{{ gender }}</h3>
+  <h3>年龄:{{ age }}</h3>
+  <h3>喜欢的一句话:{{ message }}</h3>
+  <h3>用户名称:{{ username }}</h3>
+  <h3>tup:{{ tup }}</h3>
+  <h3>tup[0]:{{ tup.0 }}</h3>
+  <h3>list:{{ list }}</h3>
+  <h3>list[1]:{{ list.1 }}</h3>
+  <h3>dic:{{ dic }}</h3>
+  <h3>dic.CC : {{ dic.CC }}</h3>
+  <h3>show:{{ show }}</h3>
+  <h3>dog.name:{{ dog.name }}</h3>
+  <h3>dog.eat():{{ dog.eat }}</h3>
+</body>
+</html>
