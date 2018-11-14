@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {{% block title %}}
+            01-parent.html
+        {{% endblck %}}
+    </title>
+</head>
+<body>
+    <h1>这是网页的头部</h1>
+    {{% block anchor %}}
+        <a href="/02-child/">去往02-child</a>
+    {{% endblock %}}
+</body>
+</html>
