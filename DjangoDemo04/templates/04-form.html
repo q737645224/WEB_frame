@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    /*#id_subject{
+      border:2px solid #f00;
+    }*/
+
+    input[name='subject']{
+      border:2px solid #ff0;
+      border-radius:3px;
+    }
+  </style>
+</head>
+<body>
+  <form action="/04-form/" method="post">
+    {% csrf_token %}
+    {% comment '手动解析' %}
+    {% for field in form %}
+      <p>
+        {{ field.label }}:{{ field }}
+      </p>
+    {% endfor %}
+    {% endcomment %}
+    <ul>
+      {{ form.as_ul }}
+    </ul>
+    <p>
+      <input type="submit" value="提交">
+    </p>
+  </form>
+</body>
+</html>
