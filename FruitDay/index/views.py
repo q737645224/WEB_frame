@@ -1,80 +1,147 @@
+import json
+
+from django.core import serializers
 from django.http import HttpResponse
-from django.shortcuts import render
-from .models import *
+from django.shortcuts import render, redirect
 from .forms import *
 
 # Create your views here.
-#　http://localhost:8000/login
+def index_views(request):
+  return render(request,'index.html')
+
 def login_views(request):
-  # 判断　get 请求还是　post　请求
   if request.method == 'GET':
-    #get请求　－　判断session,判断cookie,登录页
-    #先判断session中是否有登录信息
+    #获取请求源地址,如果没有的话则获取'/'
+    url = request.META.get('HTTP_REFERER','/')
+    # print("请求源地址:"+url)
+    #判断session中是否有uid和uphone
     if 'uid' in request.session and 'uphone' in request.session:
-      #有登录信息保存在　session
-      return HttpResponse('您已经登录成功了')
+      return redirect(url)
     else:
-      #没有登录信息保存在　session，继续判断cookies中是否有登录信息
+      #判断cookie中是否有uid和uphone,
       if 'uid' in request.COOKIES and 'uphone' in request.COOKIES:
-        #cookies中有登录信息　－　曾经记住过密码
-        #将cookies中的信息取出来保存进session，再返回到首页
-        uid = request.COOKIES['uid']
-        uphone = request.COOKIES['uphone']
+        #如果有的话则取出来并保存进session,再回首页
+        uid=request.COOKIES['uid']
+        uphone=request.COOKIES['uphone']
         request.session['uid']=uid
         request.session['uphone']=uphone
-        return HttpResponse('您已经登录成功')
+        return redirect(url)
       else:
-        #cookies中没有登录信息　－　去往登录页
         form = LoginForm()
-        return render(request,'login.html',locals())
+        #构建响应对象，并将url保存进cookies
+        resp = render(request,'login.html',locals())
+        resp.set_cookie('url',url)
+        return resp
   else:
-    #post请求 - 实现登录操作
-    #获取手机号和密码
-    uphone = request.POST['uphone']
-    upwd = request.POST['upwd']
-    #判断手机号和密码是否存在(登录是否成功)
-    users=User.objects.filter(uphone=uphone,upwd=upwd)
+    #post请求
+    # 获取请求源地址
+    url = request.META.get('HTTP_REFERER','/')
+    print('POST中的请求源地址:'+url)
+    #接收uphone和upwd判断是否登录成功
+    uphone=request.POST['uphone']
+    upwd=request.POST['upwd']
+    users = Users.objects.filter(uphone=uphone,upwd=upwd)
+    #如果成功继续向下执行,否则回到登录页
     if users:
-      #登录成功：先存进session
-      request.session['uid']=users[0].id
+      #登录成功,将id和uphone保存进session
+      id=users[0].id
+      request.session['uid']=id
       request.session['uphone']=uphone
-      #声明响应对象：响应一句话"登录成功"
-      resp = HttpResponse("登录成功")
-      #判断是否要存进cookies
-      if 'isSaved' in request.POST:
-        expire = 60*60*24*90
-        resp.set_cookie('uid',users[0].id,expire)
-        resp.set_cookie('uphone',uphone,expire)
+      #如果有记住密码则将数据保存进cookies
+      #先从cookies中将url的值获取出来
+      url = request.COOKIES.get('url','/')
+      resp = redirect(url)
+      #如果url存在于cookies中的话,则将url从cookies中删除出去
+      if 'url' in request.COOKIES:
+        resp.delete_cookie('url')
+      if 'isSave' in request.POST:
+        expires = 60*60*24*365
+        resp.set_cookie('uid',id,expires)
+        resp.set_cookie('uphone',uphone,expires)
       return resp
     else:
-      #登录失败
-      form = LoginForm()
-      return render(request,'login.html',locals())
+      #登录失败,回到登录页面
+      return redirect('/login/')
 
-# http://localhost:8000/register
 def register_views(request):
-  # 判断是get请求还是post请求，得到用户的请求意图
-  if request.method == 'GET':
-    return render(request,'register.html')
+  return render(request,'register.html')
+
+def check_login_views(request):
+  if 'uid' in request.session and 'uphone' in request.session:
+    #有登录信息
+    id = request.session.get('uid')
+    uname = Users.objects.get(id=id).uname
+    dic = {
+      'loginStatus':1,
+      'uname':uname,
+    }
+  elif 'uid' in request.COOKIES and 'uphone' in request.COOKIES:
+    # cookies中是有登录信息的,那么从cookies中取出数据再保存进session
+    uid = request.COOKIES['uid']
+    uphone = request.COOKIES['uphone']
+    request.session['uid']=uid
+    request.session['uphone']=uphone
+    # 根据uid的值获取出对应的uname,并构建成字典再响应给客户端
+    uname = Users.objects.get(id=uid).uname
+    dic = {
+      'loginStatus': 1,
+      'uname': uname,
+    }
   else:
-    #先验证手机号在数据库中是否存在
-    uphone = request.POST['uphone']
-    users = User.objects.filter(uphone=uphone)
-    if users:
-      #uphone 已经存在
-      errMsg = '手机号码已经存在'
-      return render(request,'register.html',locals())
-    #接收数据插入到数据库中
-    upwd = request.POST['upwd']
-    uname = request.POST['uname']
-    uemail = request.POST['uemail']
-    user = User()
-    user.uphone = uphone
-    user.upwd = upwd
-    user.uname = uname
-    user.uemail = uemail
-    user.save()
-    return HttpResponse('注册成功')
+    #没有登录信息
+    dic = {
+      'loginStatus':0,
+    }
+  return HttpResponse(json.dumps(dic))
+
+def logout_views(request):
+  if 'uid' in request.session and 'uphone' in request.session:
+    del request.session['uid']
+    del request.session['uphone']
+    #获取源地址,构建响应对象
+    url=request.META.get('HTTP_REFERER','/')
+    resp = redirect(url)
+    #判断cookies有则清除
+    if 'uid' in request.COOKIES and 'uphone' in request.COOKIES:
+      resp.delete_cookie('uid')
+      resp.delete_cookie('uphone')
+    return resp
+  return redirect('/')
+
+def check_uphone_views(request):
+  uphone = request.GET['uphone']
+  users=Users.objects.filter(uphone=uphone)
+  if users:
+    dic = {
+      'status':1,
+      'msg':'手机号码已存在',
+    }
+  else:
+    dic = {
+      'status':0,
+      'msg':'通过',
+    }
+  return HttpResponse(json.dumps(dic))
+
+def load_type_goods(request):
+  all_list = []
+  #读取GoodsType下的所有内容
+  types = GoodsType.objects.all()
+  for type in types:
+    #将类型转换为json字符串
+    type_json = json.dumps(type.to_dict())
+    #通过type获取对应的商品
+    goods = type.goods_set.all()[0:10]
+    #将goods转换为json字符串
+    goods_json=serializers.serialize('json',goods)
+    dic={
+      'type':type_json,
+      'goods':goods_json,
+    }
+    #将dic追加进all_list列表中
+    all_list.append(dic)
+  return HttpResponse(json.dumps(all_list))
+
 
 
 

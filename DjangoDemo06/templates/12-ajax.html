@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/jquery-1.11.3.js"></script>
+  <script>
+    function btnAjax(){
+      $.get('/12-server/',function(data){
+        /**循环遍历后端响应回来的列表数据*/
+        /*
+        $.each(data,function(i,obj){
+          console.log("===============");
+          console.log("ID:"+obj.pk);
+          console.log("Name:"+obj.fields.name);
+          console.log("Age:"+obj.fields.age);
+          console.log("Email:"+obj.fields.email);
+          console.log("IsActive:"+obj.fields.isActive);
+        })
+        */
+
+        console.log(data);
+
+      },'json');
+    }
+  </script>
+</head>
+<body>
+  <button onclick="btnAjax()">ajax请求</button>
+</body>
+</html>

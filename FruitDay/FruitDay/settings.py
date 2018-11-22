@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'guc2)8!^=bi+*)224g-p4lv62u9#xb6-##p8!_sb5886174t&x'
+SECRET_KEY = 'j8&p*)szk)g5ft8z+u+2e23m6yqlsspssmda!s=ls-jvbqpgu='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'FruitDay.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fruit',
-        'USER':'root',
-        'PASSWORD':'123456',
-        'HOST':'localhost',
-        'PORT':3306,
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': 'FruitDay',
+      'USER' : 'root',
+      'PASSWORD' : 123456,
+      'HOST':'localhost',
+      'PORT':3306,
     }
 }
 
@@ -109,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -123,8 +123,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# 静态文件访问路径
 STATIC_URL = '/static/'
+# 静态文件的存储路径
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
 
-SESSION_COOKIE_AGE=60*60*24
+#设置sessionid最大存活时间为30分钟
+SESSION_COOKIE_AGE=60*30
+#设置浏览器关闭时session则失效
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

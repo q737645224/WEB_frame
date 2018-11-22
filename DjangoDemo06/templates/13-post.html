@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="/static/jquery-1.11.3.js"></script>
+  <script>
+    function btnPost(){
+      $.post('/13-server/',{
+        'uname':'MrWang',
+        'uage':30,
+        'csrfmiddlewaretoken':$("[name='csrfmiddlewaretoken']").val()
+      },function(data){
+        console.log(data);
+      });
+    }
+  </script>
+</head>
+<body>
+  <button onclick="btnPost()">AJAX-POST</button>
+  {% csrf_token %}
+</body>
+</html>
