@@ -7,10 +7,10 @@
 </head>
 <body>
 	{% if errMsg %}
-    <script>
-      alert('用户名或密码不正确');
-    </script>
-  {% endif %}
+	<script>
+		alert('用户名或密码不正确')
+	</script>
+	{% endif %}
 	<div class="bg">
 		<img src="/static/images/b.jpg" alt="">
 	</div>
@@ -19,12 +19,12 @@
 			<h1>Login!</h1>
 		</div>
 		<p></p>
-		<form action="/login" method="post">
+		<form action="" method="post">
 			<ul class="right-form">
 				<h2>Login:</h2>
 				<li><input type="text" name="username" placeholder="Username" required/></li>
 				<li><input type="password" name="password" placeholder="Password" required/></li>
-				<input type="hidden" name="source_url" value="">
+				<input type="hidden" name="source_url" value="{{ request.headers.get('Referer','') }}">
 				<input type="submit" value="Login" >
 				<div class="clear"> </div>
 			</ul>
