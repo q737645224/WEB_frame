@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
  <head>
@@ -7,161 +8,78 @@
   <meta name="Keywords" content="">
   <meta name="Description" content="">
   <title>Document</title>
-   <link rel="stylesheet" href="/static/css/index.css">
-   <script src="/static/js/jquery-1.11.3.js"></script>
-   <script src="/static/js/index.js"></script>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+     <script src="{% static 'js/jquery-1.11.3.js' %}"></script>
+     <script src="{% static 'js/index.js' %}"></script>
  </head>
  <body>
-	<div id="container" class="">
-<!-- 	1. 导航	 -->
-		<div id="nav" class="">
-		<!-- 1. 右侧导航 -->
-			<ul id="rightNav">
-				<li>
-
-					
-				</li>
-				<li>
-					<b></b>
-					果园公告		
-				</li>
-				<li>
-					<b></b>
-					券卡兑换	
-				</li>
-				<li>
-					<b></b>
-					手机果园
-				</li>
-			</ul>
-		<!-- 2. 左侧导航	-->
-			<a href="#">
-				上海
-				<i></i>
-			</a>
-			<a href="#">满百包邮（含六环）</a>
-			<a href="#">星夜达</a>
+  <div id="container" class="">
+<!-- 	1.导航 -->
+    <div id="nav" class="">
+	<!-- 1.右侧导航栏	 -->
+		<ul id="rightNav">
+            <li>
+            </li>
+			<li><a href="#">果园公告</a><b></b></li>
+			<li><a href="#">券卡兑换</a><b></b></li>
+			<li><img src="{% static 'images/phone.png' %}" width="28px" height="28px" border="0"><a href="#">手机果园</a></li>
+		</ul>
+     <!-- 2.左侧导航 -->
+		<img src="{% static 'images/car.png' %}" width="28px" height="28px" border="0" alt="">
+		<a href="#">
+			上海
+			<i></i>
+		</a>
+		<a href="#">满百包邮（环郊内）</a>
+		<a href="">星夜达</a>
+	</div>
+<!--  2.banner -->
+	<div id="banner" class="">
+		<img src="{% static 'images/banner1.jpg' %}" width="" height="" border="0" alt="">
+	</div>
+<!-- 3.推荐 -->
+	<div id="commend" class="">
+		<img src="{% static 'images/25af37592bf484fbeaef1cc4ff1e09c7.jpg' %}" width="" height="" border="0" alt="">
+		<img src="{% static 'images/d72b849b461c08d991c265df00a1bfde.jpg' %}" width="" height="" border="0" alt="">
+		<img src="{% static 'images/2ba20598135dbba5e97d241ebfa167d9.jpg' %}" width="" height="" border="0" alt="">
+		<img src="{% static 'images/904419aa2e364412b3c07c3cbda24ef9.jpg' %}" width="" height="" border="0" alt="" class="no-margin">
+	</div>
+<!-- 4.主体信息 -->
+	<div id="main" class="">
+		<hr>
+		<img src="{% static 'images/t4.png' %}" width="" height="" border="0" alt="" class="dif">
+		<a href="#" class="a1">更多>></a><br>
+		<img src="{% static 'images/1-270x270-3877-BXDY6KCU.jpg' %}">
+		<img src="{% static 'images/1-270x270-2114-226C8S26.jpg' %}">
+		<img src="{% static 'images/1-270x270-2109-SDK5WUW8.jpg' %}">
+		<img src="{% static 'images/1-270x270-701-CB41CHUW.jpg' %}">
+		<img src="{% static 'images/1-270x270-695-F2BSB4DC.jpg' %}" class="no-margin">
+		<div id="" class="">
+			<p class="c1">欢乐时光水果礼篮</p>
+			<p>&nbsp;￥188.00/1份</p>
+			<img src="{% static 'images/cart.png' %}" width="" height="" border="0" alt="">
 		</div>
-<!--	2. banner	-->
-		<div id="banner" class="">
-			<img src="/static/images/banner1.jpg" width="" height="" border="0" alt="">
+		<div id="" class="">
+			<p class="c1">真心祝福水果礼篮</p>
+			<p>&nbsp;￥358.00/1礼篮</p>
+			<img src="{% static 'images/cart.png' %}" width="" height="" border="0" alt="">
 		</div>
-<!--	3. 推荐	-->
-		<div id="commend" class="">
-			 <img src="/static/images/2ba20598135dbba5e97d241ebfa167d9.jpg" width="" height="" border="0" alt="">
-			 <img src="/static/images/2ba20598135dbba5e97d241ebfa167d9.jpg" width="" height="" border="0" alt="">
-			 <img src="/static/images/2ba20598135dbba5e97d241ebfa167d9.jpg" width="" height="" border="0" alt="">
-			 <img src="/static/images/2ba20598135dbba5e97d241ebfa167d9.jpg" class="no-margin">
+		<div id="" class="">
+			<p class="c1">深情厚意水果礼篮</p>
+			<p>&nbsp;￥580.00/1盒</p>
+			<img src="{% static 'images/cart.png' %}" width="" height="" border="0" alt="">
 		</div>
-<!--	4. 主体信息	-->
-		<div id="main" class="">
-      <!-- 		分上下结构（商品分类和信息展示）	 -->
-			<p>
-				<a href="">更多</a>
-				<img src="/static/images/t4.png">
-			</p>
-      <!--		信息展示	 -->
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item no-margin">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item">
-				<div id="" class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
-			<div class="item no-margin">
-				<div class="proImg">
-					<img src="/static/images/1-270x270-430-9RBRWTU9.jpg">
-				</div>
-				<p>
-					欢乐时光水果果篮
-					<img src="/static/images/cart.png" >
-				</p>
-				<span class="">&yen; 188.00/1份</span>
-			</div>
+		<div id="" class="">
+			<p class="c1">天天果园500元充值卡</p>
+			<p>&nbsp;￥500.00/1张</p>
+			<img src="{% static 'images/cart.png' %}" width="" height="" border="0" alt="">
+		</div>
+		<div id="" class="no-margin">
+			<p class="c1">天天果园100元充值卡</p>
+			<p>&nbsp;￥100.00/1张</p>
+			<img src="{% static 'images/cart.png' %}" width="" height="" border="0" alt="">
 		</div>
 	</div>
+  </div>
  </body>
 </html>

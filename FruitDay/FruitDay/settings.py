@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'j8&p*)szk)g5ft8z+u+2e23m6yqlsspssmda!s=ls-jvbqpgu='
+SECRET_KEY = 'd8=)+gm66p9brhi#(o)h$b#x%(lgws@=+!cabuq9acea#42bs3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'index',
+    'index'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')]
-      ,
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'FruitDay.wsgi.application'
 
 DATABASES = {
     'default': {
-      'ENGINE': 'django.db.backends.mysql',
-      'NAME': 'FruitDay',
-      'USER' : 'root',
-      'PASSWORD' : 123456,
-      'HOST':'localhost',
-      'PORT':3306,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'fruitday',
+        'USER':'root',
+        'PASSWORD':'123456',
+        'HOST':'0.0.0.0',
+        'POST':3306,
     }
 }
 
@@ -123,12 +123,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-# 静态文件访问路径
 STATIC_URL = '/static/'
-# 静态文件的存储路径
-STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
+STATIC_ROOT = '/home/tarena/django/FruitDay/static/'
 
-#设置sessionid最大存活时间为30分钟
+
+# STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),)
+
+#设置session最大存活时间为30分钟
 SESSION_COOKIE_AGE=60*30
 #设置浏览器关闭时session则失效
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE =True
